@@ -16,6 +16,7 @@ fn main() -> std::io::Result<()>{
                 loop {
                     let mut bytes = [0u8, 128];
                     let res = client_socket.read(&mut bytes)?;
+                    print!("{}", String::from_utf8_lossy(&bytes[0.. res as usize]));
                     if res > 0 {
                         client_socket.write(&bytes[0..res as usize])?;
                     } else {
@@ -23,7 +24,7 @@ fn main() -> std::io::Result<()>{
                     }
                 }
             },
-            Err(e) => println!("Could not accept client {:?}", e),
+            Err(e) => {eprintln!("failed: {}", e)},
         }
     }
 

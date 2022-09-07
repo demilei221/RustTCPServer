@@ -10,6 +10,8 @@ fn handle_client(mut stream: TcpStream) -> Result<(), Error> {
         let res = stream.read(&mut bytes)?;
         if res > 0 {
             stream.write(&bytes[..res as usize])?;
+            // println!("client {} connected to server", );
+            print!("{}> {}", stream.peer_addr()?, String::from_utf8_lossy(&bytes[0.. res as usize]));
         } else {
             return Ok(());
         }
